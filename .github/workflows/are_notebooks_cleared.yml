@@ -1,0 +1,29 @@
+name: Are Notebooks Cleared
+
+on:
+  workflow_call:
+    inputs:
+      paths:
+        required: false
+        type: string
+        default: "**/*.ipynb"
+
+jobs:
+  are-notebooks-cleared:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Provide Script
+        run: |
+          mkdir -p ./scripts
+          curl -o ./scripts/are_notebooks_cleared.sh https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts/are_notebooks_cleared.bash
+          chmod +x ./scripts/are_notebooks_cleared.sh
+
+      - name: Are Notebooks Cleared
+        run: ./scripts/are_notebooks_cleared.bash "${{ inputs.paths }}"

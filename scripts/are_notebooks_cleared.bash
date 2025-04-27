@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ---
-# description: Checks whether iPy notebooks contain uncleared cells.
+# description: Checks whether iPy notebooks contain uncleared output cells.
 # ---
 
 failed=0
