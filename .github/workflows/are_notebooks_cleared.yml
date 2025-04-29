@@ -22,8 +22,8 @@ jobs:
       - name: Provide Script
         run: |
           mkdir -p ./scripts
-          curl -o ./scripts/are_notebooks_cleared.sh https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts/are_notebooks_cleared.bash
-          chmod +x ./scripts/are_notebooks_cleared.sh
+          curl -o ./scripts/are_notebooks_cleared.bash https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts/are_notebooks_cleared.bash
+          chmod +x ./scripts/are_notebooks_cleared.bash
 
       - name: Are Notebooks Cleared
         run: ./scripts/are_notebooks_cleared.bash "${{ inputs.paths }}"

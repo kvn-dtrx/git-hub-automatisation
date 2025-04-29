@@ -1,0 +1,23 @@
+name: Check Branch Name
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  check-branch-name:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Provide Script
+        run: |
+          mkdir -p ./scripts
+          curl -o ./scripts/check_branch_name.bash https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts/check_branch_name.bash
+          chmod +x ./scripts/check_branch_name.bash
+
+      - name: Are Notebooks Cleared
+        run: ./scripts/check_branch_name.bash "${{ inputs.paths }}"
