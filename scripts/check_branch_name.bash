@@ -23,7 +23,7 @@ else
 fi
 
 if [[ ! "${branch_name}" =~ ${branch_pattern} ]]; then
-    echo "Warning: Branch name '${branch_name}' is not well formatted."
+    echo "Warning: Branch name _'${branch_name}'_ is not well formatted."
     echo "Branch names should match the regexp:"
     echo "${branch_pattern}"
     echo "Please stick to this convention next time."
