@@ -16,8 +16,8 @@ branch_pattern+=")"
 branch_pattern+="[a-z0-9_-]+$"
 branch_pattern+="$"
 
-if [ -n "${GITHUB_REF}" ]; then
-    branch_name="$(echo "${GITHUB_REF}")"
+if [ -n "${GITHUB_HEAD_REF}" ]; then
+    branch_name="$(echo "${GITHUB_HEAD_REF}")"
 else
     branch_name="$(git rev-parse --abbrev-ref HEAD)"
 fi
