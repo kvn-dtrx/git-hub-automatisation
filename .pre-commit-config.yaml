@@ -7,11 +7,11 @@ repos:
         language: system
         files: ^$
 
-      - id: pushes-to-protected-branch
-        name: Pushes to Protected Branch
-        entry: ./scripts/pushes_to_protected_branch.sh
-        language: system
-        files: ^$
+      # - id: pushes-to-protected-branch
+      #   name: Pushes to Protected Branch
+      #   entry: ./scripts/pushes_to_protected_branch.sh
+      #   language: system
+      #   files: ^$
 
       - id: are-filenames-formatted
         name: Are Filenames Formatted

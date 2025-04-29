@@ -14,4 +14,4 @@
   name: Are Filenames Formatted
   entry: ./scripts/are_filenames_formatted.bash
   language: system
-  files: ^$
+  files: ^a y*$
