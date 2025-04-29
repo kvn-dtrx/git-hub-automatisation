@@ -9,7 +9,7 @@ on:
         default: "**/*"
 
 jobs:
-  are-notebooks-cleared:
+  are-filenames-formatted:
     runs-on: ubuntu-latest
 
     steps:
