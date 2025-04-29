@@ -1,0 +1,20 @@
+repos:
+  - repo: local
+    hooks:
+      - id: format-commit-message
+        name: Format Commit Message
+        entry: ./scripts/format_commit_message.sh
+        language: system
+        files: ^$
+
+      - id: pushes-to-protected-branch
+        name: Pushes to Protected Branch
+        entry: ./scripts/pushes_to_protected_branch.sh
+        language: system
+        files: ^$
+
+      - id: are-filenames-formatted
+        name: Are Filenames Formatted
+        entry: ./scripts/are_filenames_formatted.sh
+        language: system
+        files: ^$
