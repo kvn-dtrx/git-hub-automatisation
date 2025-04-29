@@ -15,6 +15,6 @@ repos:
 
       - id: are-filenames-formatted
         name: Are Filenames Formatted
-        entry: ./scripts/are_filenames_formatted.sh
+        entry: ./scripts/are_filenames_formatted.bash
         language: system
-        files: ^$
+        files: ^.+$
