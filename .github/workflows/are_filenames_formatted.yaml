@@ -22,5 +22,5 @@ jobs:
           curl -o ./scripts/are_filenames_formatted.bash https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts/are_filenames_formatted.bash
           chmod +x ./scripts/are_filenames_formatted.bash
 
-      - name: Are Notebooks Cleared
+      - name: Are Filenames Formatted
         run: ./scripts/are_filenames_formatted.bash "${{ inputs.paths }}"

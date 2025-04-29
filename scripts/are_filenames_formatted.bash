@@ -13,7 +13,8 @@ while IFS='' read -r -d '' file; do
     fi
     # It must be ensured that the while loop runs in the main shell,
     # otherwise changes to the failed variable would be restricted to subshells!.
-done < <(git diff --cached --name-only -z)
+    # done < <(git diff --cached --name-only -z)
+done < <(find . -name "*" -print0)
 
 if [ "${failed}" -gt 0 ]; then
     exit 1
