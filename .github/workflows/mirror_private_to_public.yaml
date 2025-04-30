@@ -1,0 +1,37 @@
+name: Mirror Private to Public
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Private Repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install git filter-repo
+        run: |
+          sudo apt update && sudo apt install python3-pip -y
+          pip install git-filter-repo
+
+      - name: Remove Sensitive Files
+        run: |
+          git filter-repo --path secrets.json --invert-paths
+          git filter-repo --path config/ --invert-paths
+
+      - name: Provide Script
+        run: |
+          mkdir -p ./scripts
+          curl -o ./scripts/mirror_private_to_public.sh https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts/mirror_private_to_public.sh
+          chmod +x ./scripts/mirror_private_to_public.sh
+
+      - name: Mirror Private to Public
+        run: ./scripts/mirror_private_to_public.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
