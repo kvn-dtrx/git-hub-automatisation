@@ -2,10 +2,6 @@ name: Mirror Private to Public
 
 on:
   workflow_call:
-  push:
-    branches:
-      - main
-      - master
 
 jobs:
   mirror-private-to-public:
