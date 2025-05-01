@@ -1,22 +1,34 @@
 #!/bin/sh
 
-for private_repo in "${@}"; do
-    public_repo="${private_repo}-fyc"
+FYCIGNORE=".fycignore"
 
-    git clone --bare "${private_repo}" tmp.git
-    cd tmp.git || exit 1
+PRIVATE_REPO="${GITHUB_REPOSITORY}"
 
-    if ! gh repo view "${public_repo}" 2 >/dev/null >&1; then
-        gh repo create "$PUBLIC_REPO_NAME" --public
-    fi
+public_repo="${PRIVATE_REPO}-fyc"
 
-    git filter-repo --path secrets.json --invert-paths
-    git filter-repo --path config/ --invert-paths
+git clone --bare "${PRIVATE_REPO}" tmp.git
+cd tmp.git || exit 1
 
-    git remote add mirror "${public_repo}"
+if ! gh repo view "${public_repo}" 2 >/dev/null >&1; then
+    gh repo create "${public_repo}" --public
+fi
 
-    git push --mirror mirror
+if ! git ls-files | grep -q "${FYCIGNORE}"; then
+    echo "No ${FYCIGNORE} file present!"
+    exit 1
+fi
 
-    cd ..
-    rm -rf tmp.git
-done
+git filter-repo \
+    --invert-paths \
+    --paths-from-file .fycignore
+
+git filter-repo \
+    --invert-paths \
+    --path "${FYCIGNORE}"
+
+git remote add fyc-mirror "${public_repo}"
+
+git push --mirror fyc-mirror
+
+cd ..
+rm -rf tmp.git
