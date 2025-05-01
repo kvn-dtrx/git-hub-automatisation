@@ -21,7 +21,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh auth login --with-token <<< "${GH_TOKEN}" || 
+          echo "${GH_TOKEN}" | 
+          gh auth login --with-token || 
           { echo "GitHub CLI authentication failed!"; exit 1; }
 
       # - name: Provide Script
