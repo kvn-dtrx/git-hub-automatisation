@@ -3,7 +3,7 @@
 FYCIGNORE=".fycignore"
 
 PRIVATE_REPO="${GITHUB_REPOSITORY}"
-
+echo __ $PRIVATE_REPO __
 public_repo="${PRIVATE_REPO}-fyc"
 
 git clone --bare "${PRIVATE_REPO}" tmp.git
