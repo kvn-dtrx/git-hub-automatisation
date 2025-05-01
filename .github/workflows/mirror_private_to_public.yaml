@@ -21,15 +21,13 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh auth login --with-token <<< "${GH_TOKEN}" ||
-          { echo "GitHub CLI authentication failed!"; exit 1; }
+          gh auth login --with-token <<< "${GH_TOKEN}" || { echo "GitHub CLI authentication failed!"; exit 1; }
 
-      - name: Provide Script
-        run: |
-          mkdir -p ./scripts
-          curl -o ./scripts/mirror_private_to_public.sh https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts/mirror_private_to_public.sh
-          chmod +x ./scripts/mirror_private_to_public.sh
-          echo foo
+      # - name: Provide Script
+      #   run: |
+      #     mkdir -p ./scripts
+      #     curl -o ./scripts/mirror_private_to_public.sh https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts/mirror_private_to_public.sh
+      #     chmod +x ./scripts/mirror_private_to_public.sh
 
       # - name: Mirror Private to Public
       #   run: ./scripts/mirror_private_to_public.sh
