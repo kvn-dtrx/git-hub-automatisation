@@ -22,6 +22,11 @@ jobs:
           sudo apt update && sudo apt install gh -y
           gh auth setup-git
 
+      - name: Authenticate GitHub CLI
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh auth login --with-token <<< "${GH_TOKEN}"
+
       - name: Provide Script
         run: |
           mkdir -p ./scripts
