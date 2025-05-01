@@ -1,0 +1,26 @@
+name: Update Fork
+
+on:
+  workflow_call:
+  schedule:
+    - cron: "0 6 * * *"
+  # Allows manual trigger
+  workflow_dispatch:
+
+jobs:
+  update-fork:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+
+      - name: Provide Script
+        run: |
+          mkdir -p ./scripts
+          curl -o ./scripts/update_repo.sh https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts/update_repo.sh
+          chmod +x ./scripts/update_repo.sh
+
+      - name: Update Fork
+        run: ./scripts/update_repo.sh
