@@ -18,20 +18,20 @@ jobs:
           sudo apt update && sudo apt install gh -y
           gh auth setup-git
 
-      - name: Authenticate GitHub CLI
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh auth login --with-token <<< "${GH_TOKEN}" ||
-          { echo "GitHub CLI authentication failed!"; exit 1; }
+      # - name: Authenticate GitHub CLI
+      #   env:
+      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: |
+      #     gh auth login --with-token <<< "${GH_TOKEN}" ||
+      #     { echo "GitHub CLI authentication failed!"; exit 1; }
 
-      - name: Provide Script
-        run: |
-          mkdir -p ./scripts
-          curl -o ./scripts/mirror_private_to_public.sh https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts/mirror_private_to_public.sh
-          chmod +x ./scripts/mirror_private_to_public.sh
+      # - name: Provide Script
+      #   run: |
+      #     mkdir -p ./scripts
+      #     curl -o ./scripts/mirror_private_to_public.sh https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts/mirror_private_to_public.sh
+      #     chmod +x ./scripts/mirror_private_to_public.sh
 
-      - name: Mirror Private to Public
-        run: ./scripts/mirror_private_to_public.sh
-        # env:
-        #   GITHUB_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
+      # - name: Mirror Private to Public
+      #   run: ./scripts/mirror_private_to_public.sh
+      #   # env:
+      #   #   GITHUB_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
