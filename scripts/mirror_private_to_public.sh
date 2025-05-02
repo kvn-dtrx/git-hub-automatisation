@@ -3,32 +3,47 @@
 FYCIGNORE=".fycignore"
 
 PRIVATE_REPO="https://github.com/${GITHUB_REPOSITORY}"
+# PRIVATE_REPO="https://github.com/kvn-dtrx/xperiments"
 
 public_repo="${PRIVATE_REPO}-fyc"
 
-git clone --bare "${PRIVATE_REPO}" tmp.git
-cd tmp.git || exit 1
+TMPDIR=$(mktemp -d -t repo-to-mirror)
+# TMPDIR=tmp.git
 
-if ! gh repo view "${public_repo}" 2 >/dev/null >&1; then
-    gh repo create "${public_repo}" --public
-fi
+git clone \
+    --branch main \
+    --single-branch \
+    "${PRIVATE_REPO}" \
+    "${TMPDIR}"
 
-if ! git ls-files | grep -q "${FYCIGNORE}"; then
-    echo "No ${FYCIGNORE} file present!"
-    exit 1
-fi
+(
+    cd "${TMPDIR}" ||
+        {
+            echo "Failed to enter temporary directory"
+            exit 1
+        }
 
-git filter-repo \
-    --invert-paths \
-    --paths-from-file .fycignore
+    if ! gh repo view "${public_repo}" >/dev/null 2>&1; then
+        gh repo create "${public_repo}" --public
+    fi
 
-git filter-repo \
-    --invert-paths \
-    --path "${FYCIGNORE}"
+    if ! git ls-tree -r --name-only HEAD | grep -q "${FYCIGNORE}"; then
+        echo "No ${FYCIGNORE} file present!"
+        exit 0
+    fi
 
-git remote add fyc-mirror "${public_repo}"
+    git filter-repo \
+        --invert-paths \
+        --paths-from-file "${FYCIGNORE}"
 
-git push --mirror fyc-mirror
+    git filter-repo \
+        --invert-paths \
+        --path "${FYCIGNORE}"
 
-cd ..
-rm -rf tmp.git
+    git remote add fyc-mirror "${public_repo}"
+
+    git push --mirror fyc-mirror
+
+)
+
+rm -rf "${TMPDIR}"
