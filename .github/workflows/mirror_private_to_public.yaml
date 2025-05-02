@@ -25,7 +25,9 @@ jobs:
       - name: Authenticate GitHub CLI
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
-        # ENIGMA How to solve the authentication problem
+          # ENIGMA How to solve the authentication problem
+          # Authentication is required here as well as in the script
+          # for pushing the mirrored repo to remote again.
         run: |
           gh auth login --with-token --hostname github.com <<< "${GH_TOKEN}" || 
           { echo "GitHub CLI authentication failed!"; exit 1; }
