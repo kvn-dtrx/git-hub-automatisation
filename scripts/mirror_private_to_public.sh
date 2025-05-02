@@ -7,7 +7,7 @@ PRIVATE_REPO="https://github.com/${GITHUB_REPOSITORY}"
 
 public_repo="${PRIVATE_REPO}-fyc"
 
-TMPDIR=$(mktemp -d -t repo-to-mirror)
+TMPDIR=$(mktemp -d -t repo-to-mirror.XXX)
 # TMPDIR=tmp.git
 
 git clone \

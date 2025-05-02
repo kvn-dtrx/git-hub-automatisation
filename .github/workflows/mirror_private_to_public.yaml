@@ -13,6 +13,11 @@ jobs:
       - name: Checkout Private Repository
         uses: actions/checkout@v4
 
+      - name: Install git-filter-repo
+        run: |
+          python3 -m pip install --user git-filter-repo
+        # echo "$HOME/.local/bin" >> $GITHUB_PATH
+
       - name: Install GitHub CLI
         run: |
           sudo apt update && sudo apt install gh -y
