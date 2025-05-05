@@ -1,6 +1,9 @@
 #!/bin/sh
 
-# Get list of ignored files that are staged for commit
+# ---
+# description: Checks whether the commit contains ignored files.
+# ---
+
 ignored_files=$(
     git status --ignored --porcelain |
         awk '/^!!/ {print $2}' |
