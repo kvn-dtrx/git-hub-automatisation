@@ -1,0 +1,87 @@
+name: Check make
+
+on:
+  workflow_call:
+
+jobs:
+  # test-linux:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
+  #     - name: Install dependencies (APT)
+  #       run: |
+  #         sudo apt-get update
+  #         sudo apt-get install -y make
+  #         sudo apt-get install -y curl
+  #         sudo apt-get install -y libssl-dev
+  #         sudo apt-get install -y zlib1g-dev
+  #         sudo apt-get install -y libbz2-dev
+  #         sudo apt-get install -y libreadline-dev
+  #         sudo apt-get install -y libsqlite3-dev
+  #     - name: Install pyenv
+  #       run: |
+  #         curl https://pyenv.run | bash
+  #     - name: Configure pyenv
+  #       run: |
+  #         echo "PYENV_ROOT=$HOME/.pyenv" >> "${GITHUB_ENV}"
+  #         echo "PATH=$HOME/.pyenv/bin:${PATH}" >> "${GITHUB_ENV}"
+  #     - name: Install Python 3.11 via pyenv
+  #       run: |
+  #         export PYENV_ROOT="${HOME}/.pyenv"
+  #         export PATH="${PYENV_ROOT}/bin:${PATH}"
+  #         eval "$(pyenv init --path)"
+  #         eval "$(pyenv init -)"
+  #         pyenv install 3.11.3
+  #     - name: Run Makefile (Linux)
+  #       run: make basic-unix
+
+  # test-mac:
+  #   runs-on: macos-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
+  #     - name: Install dependencies (Homebrew)
+  #       run: |
+  #         brew install pyenv
+  #         brew install make
+  #     - name: Configure pyenv
+  #       run: |
+  #         echo "PYENV_ROOT=${HOME}/.pyenv" >> "${GITHUB_ENV}"
+  #         echo "PATH=${PYENV_ROOT}/bin:$PATH" >> "${GITHUB_ENV}"
+  #     - name: Install Python 3.11 via pyenv
+  #       run: |
+  #         pyenv install 3.11.3
+  #     - name: Run Makefile (macOS)
+  #       run: make basic-unix
+
+  test-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Install dependencies (Chocolatey)
+        run: |
+          choco install pyenv-win -y
+          choco install make -y
+        shell: powershell
+      - name: Configure pyenv-win in Environment
+        run: |
+          $pyenvRoot = "C:\tools\pyenv-win"
+          echo "PYENV=$pyenvRoot" | Out-File -Append -Encoding utf8 $env:GITHUB_ENV
+          echo "PATH=$pyenvRoot\bin;$pyenvRoot\shims;$env:PATH" | Out-File -Append -Encoding utf8 $env:GITHUB_ENV
+          $env:PYENV = $pyenvRoot
+          $env:PATH = "$pyenvRoot\bin;$pyenvRoot\shims;$env:PATH"
+        shell: powershell
+      - name: Verify pyenv-win Installation
+        run: |
+          pyenv --version
+        shell: powershell
+      - name: Install Python 3.11 via pyenv-win
+        run: |
+          pyenv install 3.11.3
+        shell: powershell
+      - name: Run Makefile (Windows)
+        run: |
+          make basic-win
+        shell: powershell
