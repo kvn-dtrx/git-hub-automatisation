@@ -1,22 +1,20 @@
-name: Are Filenames Formatted
+name: Is Commit Message Valid
 
 on:
   workflow_call:
-    inputs:
-      paths:
-        required: false
-        type: string
-        default: "**/*"
+  pull_request:
+    types:
+      - opened
+      - synchronize
 
 env:
   SCRIPT_DIR: "${{ github.workspace }}/scripts"
-  SCRIPT_NAME: "are_filenames_formatted.bash"
+  SCRIPT_NAME: "is_commit_message_valid.bash"
   REPO_URL: "https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts"
 
 jobs:
-  are-filenames-formatted:
+  is-commit-message-valid:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -28,5 +26,5 @@ jobs:
           curl -o "${SCRIPT_PATH}" "${REPO_URL}/${SCRIPT_NAME}"
           chmod +x "${SCRIPT_PATH}"
 
-      - name: Are Filenames Formatted
+      - name: Is Commit Message Valid
         run: ${SCRIPT_DIR}/${SCRIPT_NAME} "${{ inputs.paths }}"

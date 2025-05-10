@@ -20,6 +20,4 @@ done < <(git diff --name-only origin/main HEAD)
 
 if [ "${failed}" -gt 0 ]; then
     exit 1
-else
-    echo "✅ All filenames are valid."
 fi

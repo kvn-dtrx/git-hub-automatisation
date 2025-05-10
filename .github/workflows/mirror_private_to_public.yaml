@@ -3,6 +3,11 @@ name: Mirror Private to Public
 on:
   workflow_call:
 
+env:
+  SCRIPT_DIR: "${{ github.workspace }}/scripts"
+  SCRIPT_NAME: "are_notebooks_cleared.bash"
+  REPO_URL: "https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts"
+
 jobs:
   mirror-private-to-public:
     runs-on: ubuntu-latest
@@ -34,9 +39,10 @@ jobs:
 
       - name: Provide Script
         run: |
-          mkdir -p ./scripts
-          curl -o ./scripts/mirror_private_to_public.sh https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts/mirror_private_to_public.sh
-          chmod +x ./scripts/mirror_private_to_public.sh
+          SCRIPT_PATH="${SCRIPT_DIR}/${SCRIPT_NAME}"
+          mkdir -p "${SCRIPT_DIR}"
+          curl -o "${SCRIPT_PATH}" "${REPO_URL}/${SCRIPT_NAME}"
+          chmod +x "${SCRIPT_PATH}"
 
       - name: Mirror Private to Public
-        run: ./scripts/mirror_private_to_public.sh
+        run: ${SCRIPT_DIR}/${SCRIPT_NAME}

@@ -8,6 +8,11 @@ on:
         type: string
         default: "**/*.ipynb"
 
+env:
+  SCRIPT_DIR: "${{ github.workspace }}/scripts"
+  SCRIPT_NAME: "are_notebooks_cleared.bash"
+  REPO_URL: "https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts"
+
 jobs:
   are-notebooks-cleared:
     runs-on: ubuntu-latest
@@ -21,9 +26,10 @@ jobs:
 
       - name: Provide Script
         run: |
-          mkdir -p ./scripts
-          curl -o ./scripts/are_notebooks_cleared.bash https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts/are_notebooks_cleared.bash
-          chmod +x ./scripts/are_notebooks_cleared.bash
+          SCRIPT_PATH="${SCRIPT_DIR}/${SCRIPT_NAME}"
+          mkdir -p "${SCRIPT_DIR}"
+          curl -o "${SCRIPT_PATH}" "${REPO_URL}/${SCRIPT_NAME}"
+          chmod +x "${SCRIPT_PATH}"
 
       - name: Are Notebooks Cleared
-        run: ./scripts/are_notebooks_cleared.bash "${{ inputs.paths }}"
+        run: ${SCRIPT_DIR}/${SCRIPT_NAME} "${{ inputs.paths }}"

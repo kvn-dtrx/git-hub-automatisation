@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# ---
+# description: Checks whether the branch name is well formatted.
+# ---
+
 branch_pattern=""
 branch_pattern+="^"
 branch_pattern+="("

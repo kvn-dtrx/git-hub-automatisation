@@ -3,6 +3,11 @@ name: Do Links Work
 on:
   workflow_call:
 
+env:
+  SCRIPT_DIR: "${{ github.workspace }}/scripts"
+  SCRIPT_NAME: "are_notebooks_cleared.bash"
+  REPO_URL: "https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts"
+
 jobs:
   do-links-work:
     runs-on: ubuntu-latest

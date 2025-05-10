@@ -1,10 +1,10 @@
-name: Check make
+name: Does make Work
 
 on:
   workflow_call:
 
 jobs:
-  # test-linux:
+  # does-make-work-linux:
   #   runs-on: ubuntu-latest
   #   steps:
   #     - name: Checkout repository
@@ -36,7 +36,7 @@ jobs:
   #     - name: Run Makefile (Linux)
   #       run: make basic-unix
 
-  # test-mac:
+  # does-make-work-mac:
   #   runs-on: macos-latest
   #   steps:
   #     - name: Checkout repository
@@ -55,7 +55,7 @@ jobs:
   #     - name: Run Makefile (macOS)
   #       run: make basic-unix
 
-  test-windows:
+  does-make-work-windows:
     runs-on: windows-latest
     steps:
       - name: Checkout repository
