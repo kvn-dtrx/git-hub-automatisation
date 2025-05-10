@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # ---
-# description: Checks whether the branch name is well formatted.
+# description: |
+#   Checks whether the branch name is well formatted.
+#   Intended to be used as a pre-commit hook.
 # ---
 
 branch_pattern=""
@@ -21,16 +23,16 @@ branch_pattern+="[a-z0-9_-]+$"
 branch_pattern+="$"
 
 if [ -n "${GITHUB_HEAD_REF}" ]; then
-    branch_name="$(echo "${GITHUB_HEAD_REF}")"
+    branch_name="${GITHUB_HEAD_REF}"
 else
     branch_name="$(git rev-parse --abbrev-ref HEAD)"
 fi
 
 if [[ ! "${branch_name}" =~ ${branch_pattern} ]]; then
-    echo "⚠️ Branch name is not well formatted:"
-    echo "  '${branch_name}'"
+    echo "Branch name is not well formatted:"
+    echo "  ${branch_name}"
     echo "Branch names should match the regexp:"
-    echo "${branch_pattern}"
+    echo "  ${branch_pattern}"
     echo "Please stick to this convention next time."
     exit 1
 fi

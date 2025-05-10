@@ -1,6 +1,6 @@
 #!/bin/sh
 
-FYCIGNORE=".fycignore"
+PUBIGNORE=".pubignore"
 
 PRIVATE_REPO="https://github.com/${GITHUB_REPOSITORY}"
 # PRIVATE_REPO="https://github.com/kvn-dtrx/xperiments"
@@ -27,18 +27,18 @@ git clone \
         gh repo create "${public_repo}" --public
     fi
 
-    if ! git ls-tree -r --name-only HEAD | grep -q "${FYCIGNORE}"; then
-        echo "No ${FYCIGNORE} file present!"
+    if ! git ls-tree -r --name-only HEAD | grep -q "${PUBIGNORE}"; then
+        echo "No ${PUBIGNORE} file present!"
         exit 0
     fi
 
     git filter-repo \
         --invert-paths \
-        --paths-from-file "${FYCIGNORE}"
+        --paths-from-file "${PUBIGNORE}"
 
     git filter-repo \
         --invert-paths \
-        --path "${FYCIGNORE}"
+        --path "${PUBIGNORE}"
 
     git remote add fyc-mirror "${public_repo}"
 

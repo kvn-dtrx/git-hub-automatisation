@@ -1,7 +1,9 @@
 #!/bin/sh
 
 # ---
-# description: Checks whether the commit contains ignored files.
+# description: |
+#   Checks whether the commit contains ignored files.
+#   Intended to be used as a pre-commit hook.
 # ---
 
 ignored_files=$(
@@ -11,8 +13,9 @@ ignored_files=$(
 )
 
 if [ -n "${ignored_files}" ]; then
-    echo "Warning: You are trying to commit ignored files:"
-    echo "${ignored_files}"
-    echo "If you really want to commit, run: git commit --no-verify"
+    echo "Ignored files found in the commit:"
+    echo "  ${ignored_files}"
+    echo "If you really want to commit, run:"
+    echo "  git commit --no-verify"
     exit 1
 fi

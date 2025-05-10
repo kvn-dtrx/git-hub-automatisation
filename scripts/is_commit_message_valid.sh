@@ -1,39 +1,45 @@
 #!/bin/bash
 
 # ---
-# description: Checks whether the commit message is well formatted.
+# description: |
+#   Checks whether the commit message is well formatted.
+#   Intended to be used as a pre-commit hook.
 # ---
 
-PREFIXES=(
+TYPES=(
     "feat"
     "fix"
-    "docs"
-    "style"
-    "refactor"
-    "test"
     "chore"
-    "perf"
-    "ci"
-    "build"
-    "revert"
-    "security"
-    "ux"
-    "localization"
+    "docs"
+    "refactor"
+    "style"
+    "test"
     "wip"
-    "meta"
+    # "perf"
+    # "ci"
+    # "build"
+    # "revert"
+    # "security"
+    # "ux"
+    # "localization"
+    # "meta"
 )
 
-REGEXP=""
-REGEXP+="^("
-for prefix in "${PREFIXES[@]}"; do
-    REGEXP+="${prefix}|"
-done
-REGEXP="${REGEXP%|}): "
+TYPE_PATTERN="($(
+    IFS='|'
+    echo "${TYPES[*]}"
+))"
 
-COMMIT_MSG="$(git log -1 --pretty=format:"%s")"
+# Full Conventional Commit regex
+REGEX="^${TYPE_PATTERN}(\([a-zA-Z0-9_-]+\))?(!)?: .+"
 
-if ! echo "${COMMIT_MSG}" | grep -Eq "${VALID_PREFIXES}"; then
-    echo "Commit message does not match:"
-    echo "${REGEXP}"
+COMMIT_MSG_FILE="$1"
+COMMIT_MSG=$(head -n1 "$COMMIT_MSG_FILE")
+
+if ! echo "${COMMIT_MSG}" | grep -Eq "${REGEX}"; then
+    echo "Invalid commit message format!"
+    echo "Commit message must follow Conventional Commits format:"
+    echo "  <type>(optional-scope)!: description"
+    echo "Allowed types are: ${TYPES[*]}"
     exit 1
 fi

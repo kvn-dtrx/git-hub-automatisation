@@ -1,7 +1,9 @@
 #!/bin/sh
 
 # ---
-# description: Checks whether the push operation targets a protected branch.
+# description: |
+#   Checks whether the push operation targets a protected branch.
+#   Intended to be used as a pre-push hook.
 # ---
 
 pb="${pb} main"
