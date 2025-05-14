@@ -9,9 +9,7 @@ on:
         default: "**/*.ipynb"
 
 env:
-  SCRIPT_DIR: "${{ github.workspace }}/scripts"
-  SCRIPT_NAME: "are_notebooks_cleared.bash"
-  REPO_URL: "https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts"
+  SCRIPT_URL: "https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts/ci/are_notebooks_cleared.bash"
 
 jobs:
   are-notebooks-cleared:
@@ -24,12 +22,12 @@ jobs:
       - name: Install jq
         run: sudo apt-get update && sudo apt-get install -y jq
 
-      - name: Provide Script
-        run: |
-          SCRIPT_PATH="${SCRIPT_DIR}/${SCRIPT_NAME}"
-          mkdir -p "${SCRIPT_DIR}"
-          curl -o "${SCRIPT_PATH}" "${REPO_URL}/${SCRIPT_NAME}"
-          chmod +x "${SCRIPT_PATH}"
-
       - name: Are Notebooks Cleared
-        run: ${SCRIPT_DIR}/${SCRIPT_NAME} "${{ inputs.paths }}"
+        run: |
+          curl -fsSL "${SCRIPT_URL}" | 
+            bash -s -- "${{ inputs.paths }}"
+
+      # - name: Run Notebook Check Script
+      #   run: |
+      #     curl -fsSL -o check_notebooks.sh https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts/are_notebooks_cleared.bash
+      #     bash check_notebooks.sh "${{ inputs.paths }}"

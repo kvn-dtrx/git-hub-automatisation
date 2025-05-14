@@ -2,7 +2,7 @@
 
 # ---
 # description: |
-#   Checks whether the commit contains ignored files.
+#   Checks whether a commit contains ignored files.
 #   Intended to be used as a pre-commit hook.
 # ---
 

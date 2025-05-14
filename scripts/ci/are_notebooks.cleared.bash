@@ -2,11 +2,17 @@
 
 # ---
 # description: |
-#   Checks whether iPy notebooks contain uncleared output cells.
-#   Intended to be used as a pre-commit hook.
+#   Checks whether output cells of all iPy notebooks are cleared.
+#   Intended to be used as a GitHub workflow run on pull requests.
 # ---
 
 failed=0
+
+notebooks="$(
+    git diff --name-only --diff-filter=AM -z origin/"${BASE_REF}"...HEAD |
+        grep -z '\.ipynb$' ||
+        true
+)"
 
 while IFS='' read -r -d '' notebook; do
     if [ -n "$(jq '.cells[] | select(.outputs | length > 0)' "$notebook")" ]; then
@@ -16,7 +22,7 @@ while IFS='' read -r -d '' notebook; do
     fi
     # It must be ensured that the while loop runs in the main shell,
     # otherwise changes to the failed variable would be restricted to subshells!.
-done < <(find . -name "*.ipynb" -print0)
+done <<<"${notebooks}"
 
 if [ "${failed}" -gt 0 ]; then
     echo "Commit aborted due to uncleared output cells."

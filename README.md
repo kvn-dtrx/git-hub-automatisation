@@ -1,2 +1,9 @@
 # git-hub-automatisation
-Custom git hooks, GitHub workflows, ...
+
+This repository collects:
+
+- hooks for git
+- workflows for GitHub
+- further script
+
+These are used by its author throughout his repositories.
