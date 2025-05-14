@@ -19,15 +19,18 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Install jq
+      - name: Install Dependencies
         run: sudo apt-get update && sudo apt-get install -y jq
 
-      - name: Are Notebooks Cleared
+      - name: Run Core Task
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           curl -fsSL "${SCRIPT_URL}" | 
-            bash -s -- "${{ inputs.paths }}"
+            bash -s
 
-      # - name: Run Notebook Check Script
+      # - name: Run Core Task
       #   run: |
       #     curl -fsSL -o check_notebooks.sh https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts/are_notebooks_cleared.bash
       #     bash check_notebooks.sh "${{ inputs.paths }}"

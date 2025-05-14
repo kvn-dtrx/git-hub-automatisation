@@ -1,5 +1,7 @@
 # git-hub-automatisation
 
+## Rationale
+
 This repository collects:
 
 - hooks for git
