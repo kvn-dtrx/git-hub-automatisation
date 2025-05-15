@@ -22,10 +22,9 @@ done < <(
 )
 
 if [ "${failed}" -gt 0 ]; then
-    echo "Commit aborted due to uncleared output cells."
-    echo "If you really want to commit, run:"
-    echo "  git commit --no-verify"
+    echo "Notebooks with uncleared output cells found."
+    echo "Please check if this is intended."
     exit 1
 else
-    echo "No uncleared output cells found."
+    echo "No notebook with uncleared output cells found."
 fi
