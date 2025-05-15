@@ -8,11 +8,6 @@ on:
         type: string
         default: "**/*"
 
-env:
-  SCRIPT_DIR: "${{ github.workspace }}/scripts"
-  SCRIPT_NAME: "are_filenames_formatted.bash"
-  REPO_URL: "https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts"
-
 jobs:
   are-filenames-formatted:
     runs-on: ubuntu-latest
@@ -21,12 +16,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Provide Script
+      - name: Run Core Task
+        env:
+          SCRIPT_URL: "https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts/ci/are_filenames_formatted.bash"
+          INPUT_PATHS: ${{ inputs.paths }}
         run: |
-          SCRIPT_PATH="${SCRIPT_DIR}/${SCRIPT_NAME}"
-          mkdir -p "${SCRIPT_DIR}"
-          curl -o "${SCRIPT_PATH}" "${REPO_URL}/${SCRIPT_NAME}"
-          chmod +x "${SCRIPT_PATH}"
-
-      - name: Are Filenames Formatted
-        run: ${SCRIPT_DIR}/${SCRIPT_NAME} "${{ inputs.paths }}"
+          curl -fslL "${SCRIPT_URL}" -o tmp_script
+          chmod +x tmp_script
+          ./tmp_script "${INPUT_PATHS}"

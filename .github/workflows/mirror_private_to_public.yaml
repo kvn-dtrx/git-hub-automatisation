@@ -3,11 +3,6 @@ name: Mirror Private to Public
 on:
   workflow_call:
 
-env:
-  SCRIPT_DIR: "${{ github.workspace }}/scripts"
-  SCRIPT_NAME: "are_notebooks_cleared.bash"
-  REPO_URL: "https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts"
-
 jobs:
   mirror-private-to-public:
     runs-on: ubuntu-latest
@@ -18,16 +13,13 @@ jobs:
       - name: Checkout Private Repository
         uses: actions/checkout@v4
 
-      - name: Install git-filter-repo
+      - name: Install Dependencies
         run: |
           python3 -m pip install --user git-filter-repo
-        # echo "$HOME/.local/bin" >> $GITHUB_PATH
-
-      - name: Install GitHub CLI
-        run: |
+          # echo "$HOME/.local/bin" >> $GITHUB_PATH
           sudo apt update && sudo apt install gh -y
 
-      - name: Authenticate GitHub CLI
+      - name: Authenticate
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
           # ENIGMA How to solve the authentication problem
@@ -37,12 +29,10 @@ jobs:
           gh auth login --with-token --hostname github.com <<< "${GH_TOKEN}" || 
           { echo "GitHub CLI authentication failed!"; exit 1; }
 
-      - name: Provide Script
+      - name: Run Core Task
+        env:
+          SCRIPT_URL: "https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts/ci/does_repo_exist.bash"
         run: |
-          SCRIPT_PATH="${SCRIPT_DIR}/${SCRIPT_NAME}"
-          mkdir -p "${SCRIPT_DIR}"
-          curl -o "${SCRIPT_PATH}" "${REPO_URL}/${SCRIPT_NAME}"
-          chmod +x "${SCRIPT_PATH}"
-
-      - name: Mirror Private to Public
-        run: ${SCRIPT_DIR}/${SCRIPT_NAME}
+          curl -fslL "${SCRIPT_URL}" -o tmp_script
+          chmod +x tmp_script
+          ./tmp_script

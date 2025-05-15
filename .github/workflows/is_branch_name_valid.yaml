@@ -2,15 +2,10 @@ name: Is Branch Name Valid
 
 on:
   workflow_call:
-  pull_request:
-    types:
-      - opened
-      - synchronize
-
-env:
-  SCRIPT_DIR: "${{ github.workspace }}/scripts"
-  SCRIPT_NAME: "is_branch_name_valid.bash"
-  REPO_URL: "https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts"
+  # pull_request:
+  #   types:
+  #     - opened
+  #     - synchronize
 
 jobs:
   is-branch-name-valid:
@@ -19,12 +14,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Provide Script
+      - name: Run Core Task
+        env:
+          SCRIPT_URL: "https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts/cl/is_branch_name_valid.bash"
         run: |
-          SCRIPT_PATH="${SCRIPT_DIR}/${SCRIPT_NAME}"
-          mkdir -p "${SCRIPT_DIR}"
-          curl -o "${SCRIPT_PATH}" "${REPO_URL}/${SCRIPT_NAME}"
-          chmod +x "${SCRIPT_PATH}"
-
-      - name: Is Branch Name Valid
-        run: ${SCRIPT_DIR}/${SCRIPT_NAME} "${{ inputs.paths }}"
+          curl -fslL "${SCRIPT_URL}" -o tmp_script
+          chmod +x tmp_script
+          ./tmp_script

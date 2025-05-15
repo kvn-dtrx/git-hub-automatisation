@@ -18,7 +18,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Do Links Work
+      - name: Run Core Task
         uses: lycheeverse/lychee-action@v2
         id: lychee
         with:
@@ -28,7 +28,7 @@ jobs:
           # gh secret set GH_LYCHEE_TOKEN --body "cryptic-token" --repo "repo-name"
           token: ${{ secrets.GH_LYCHEE_TOKEN }}
 
-      - name: Create Issue From File
+      - name: Create Issue
         if: steps.lychee.outputs.exit_code != 0
         uses: peter-evans/create-issue-from-file@v5
         with:
