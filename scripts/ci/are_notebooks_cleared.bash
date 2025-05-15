@@ -9,7 +9,7 @@
 failed=0
 
 notebooks="$(
-    git diff --name-only --diff-filter=AM -z origin/"${BASE_REF}"...HEAD |
+    git diff --name-only --diff-filter=AM -z "${BASE_SHA}" "${HEAD_SHA}" |
         grep -z '\.ipynb$' ||
         true
 )"
