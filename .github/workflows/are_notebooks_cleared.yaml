@@ -33,8 +33,8 @@ jobs:
           BASE_SHA: ${{ inputs.base_sha }}
           HEAD_SHA: ${{ inputs.head_sha }}
         run: |
-          curl --fail --silent --show-error --location "${SCRIPT_URL}" | bash -s
-
+          curl -fslL "${SCRIPT_URL}" -o tmp_script
+          ./tmp_script
       # - name: Run Core Task
       #   run: |
       #     curl -fsSL -o check_notebooks.sh https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts/are_notebooks_cleared.bash
