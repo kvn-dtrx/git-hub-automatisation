@@ -27,8 +27,7 @@ jobs:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
-          curl -fsSL "${SCRIPT_URL}" | 
-            bash -s
+          curl --fail --silent --show-error --location "${SCRIPT_URL}" | bash -s
 
       # - name: Run Core Task
       #   run: |
