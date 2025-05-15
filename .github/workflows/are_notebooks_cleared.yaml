@@ -34,6 +34,7 @@ jobs:
           HEAD_SHA: ${{ inputs.head_sha }}
         run: |
           curl -fslL "${SCRIPT_URL}" -o tmp_script
+          chmod +x tmp_script
           ./tmp_script
       # - name: Run Core Task
       #   run: |
