@@ -9,10 +9,10 @@ on:
       head_sha:
         required: true
         type: string
-      # paths:
-      #   required: false
-      #   type: string
-      #   default: "**/*.ipynb"
+      paths:
+        required: false
+        type: string
+        default: "**/*.ipynb"
 
 jobs:
   are-notebooks-cleared:

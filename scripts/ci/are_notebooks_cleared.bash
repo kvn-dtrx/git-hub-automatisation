@@ -8,9 +8,15 @@
 
 failed=0
 
+if [[ -z "${BASE_SHA:-}" || -z "${HEAD_SHA:-}" ]]; then
+    echo "BASE_SHA and HEAD_SHA must be set."
+    exit 1
+fi
+
+echo "Notebook with uncleared output cells:"
+
 while IFS='' read -r -d '' notebook; do
     if [ -n "$(jq '.cells[] | select(.outputs | length > 0)' "$notebook")" ]; then
-        echo "Notebook with uncleared output cells found:"
         echo "  ${notebook}"
         failed=1
     fi
@@ -22,9 +28,9 @@ done < <(
 )
 
 if [ "${failed}" -gt 0 ]; then
-    echo "Notebooks with uncleared output cells found."
+    echo "Some notebooks have uncleared output cells."
     echo "Please check if this is intended."
     exit 1
 else
-    echo "No notebook with uncleared output cells found."
+    echo "None! No notebook with uncleared output cells found."
 fi
