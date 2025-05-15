@@ -12,7 +12,9 @@ which the author uses throughout his repositories.
 
 ## Repository Structure
 
-- `.github/workflows`: GitHub Actions workflows used for continuous integration, deployment, or other automated tasks triggered by repository events.
+- `.github`: GitHub-specific configuration files for workflows and templates.
+    - `workflow-templates`: Provides starter workflow templates that appear in the GitHub UI when initializing workflows in other repositories. These are intended for copy-and-customize use.
+    - `workflows`: GitHub reusable workflows used for continuous integration, deployment, or other automated tasks.
 
 - `scripts`: Scripts capturing the core functionality.  
     - `ci`: Scripts used in continuous integration (e.g., GitHub Actions).  
