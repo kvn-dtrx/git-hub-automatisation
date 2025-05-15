@@ -10,6 +10,7 @@ failed=0
 
 if [[ -z "${BASE_SHA:-}" || -z "${HEAD_SHA:-}" ]]; then
     echo "BASE_SHA and HEAD_SHA must be set."
+    echo "Perhaps the script is not run in the context of a pull request?"
     exit 1
 fi
 
