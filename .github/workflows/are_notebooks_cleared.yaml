@@ -3,13 +3,16 @@ name: Are Notebooks Cleared
 on:
   workflow_call:
     inputs:
-      paths:
-        required: false
+      base_sha:
+        required: true
         type: string
-        default: "**/*.ipynb"
-
-env:
-  SCRIPT_URL: "https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts/ci/are_notebooks_cleared.bash"
+      head_sha:
+        required: true
+        type: string
+      # paths:
+      #   required: false
+      #   type: string
+      #   default: "**/*.ipynb"
 
 jobs:
   are-notebooks-cleared:
@@ -18,14 +21,17 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Install Dependencies
         run: sudo apt-get update && sudo apt-get install -y jq
 
       - name: Run Core Task
         env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
-          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          SCRIPT_URL: "https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts/ci/are_notebooks_cleared.bash"
+          BASE_SHA: ${{ inputs.base_sha }}
+          HEAD_SHA: ${{ inputs.head_sha }}
         run: |
           curl --fail --silent --show-error --location "${SCRIPT_URL}" | bash -s
 
