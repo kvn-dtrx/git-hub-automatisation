@@ -8,12 +8,6 @@
 
 failed=0
 
-notebooks="$(
-    git diff --name-only --diff-filter=AM -z "${BASE_SHA}" "${HEAD_SHA}" |
-        grep -z '\.ipynb$' ||
-        true
-)"
-
 while IFS='' read -r -d '' notebook; do
     if [ -n "$(jq '.cells[] | select(.outputs | length > 0)' "$notebook")" ]; then
         echo "Notebook with uncleared output cells found:"
@@ -22,7 +16,10 @@ while IFS='' read -r -d '' notebook; do
     fi
     # It must be ensured that the while loop runs in the main shell,
     # otherwise changes to the failed variable would be restricted to subshells!.
-done <<<"${notebooks}"
+done < <(
+    git diff --name-only --diff-filter=AM -z "${BASE_SHA}" "${HEAD_SHA}" |
+        grep -z '\.ipynb$' || true
+)
 
 if [ "${failed}" -gt 0 ]; then
     echo "Commit aborted due to uncleared output cells."
