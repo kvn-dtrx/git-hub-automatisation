@@ -1,5 +1,7 @@
 # git-hub-automatisation
 
+**WARNING**: As indicated by the commit messages (most following the pattern wip: *), not everything is fully functional yet!
+
 ## Synopsis
 
 This repository collects
