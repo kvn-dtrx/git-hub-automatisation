@@ -10,7 +10,7 @@
 # names must also be listed in the `.pubignore` file in order
 # fully remove them from the repository history.
 
-set -euo pipefail
+set -e
 
 PUBIGNORE_NAME=".pubignore"
 REPO_PUB_SUFFIX="-pub"
