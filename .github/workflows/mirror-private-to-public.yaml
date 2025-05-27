@@ -22,7 +22,7 @@ jobs:
       - name: Authenticate
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
-          # ENIGMA How to solve the authentication problem
+          # ENIGMA: How to solve the authentication problem
           # Authentication is required here as well as in the script
           # for pushing the mirrored repo to remote again.
         run: |
@@ -31,8 +31,8 @@ jobs:
 
       - name: Run Core Task
         env:
-          SCRIPT_URL: "https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts/ci/does_repo_exist.bash"
+          SCRIPT_URL: "https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts/ci/does-repo-exist.bash"
         run: |
-          curl -fslL "${SCRIPT_URL}" -o tmp_script
-          chmod +x tmp_script
-          ./tmp_script
+          curl -fslL "${SCRIPT_URL}" -o tmp-script
+          chmod +x tmp-script
+          ./tmp-script

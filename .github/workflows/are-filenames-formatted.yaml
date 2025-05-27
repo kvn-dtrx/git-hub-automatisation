@@ -18,9 +18,9 @@ jobs:
 
       - name: Run Core Task
         env:
-          SCRIPT_URL: "https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts/ci/are_filenames_formatted.bash"
+          SCRIPT_URL: "https://raw.githubusercontent.com/kvn-dtrx/git-hub-automatisation/main/scripts/ci/are-filenames-formatted.bash"
           INPUT_PATHS: ${{ inputs.paths }}
         run: |
-          curl -fslL "${SCRIPT_URL}" -o tmp_script
-          chmod +x tmp_script
-          ./tmp_script "${INPUT_PATHS}"
+          curl -fslL "${SCRIPT_URL}" -o tmp-script
+          chmod +x tmp-script
+          ./tmp-script "${INPUT_PATHS}"

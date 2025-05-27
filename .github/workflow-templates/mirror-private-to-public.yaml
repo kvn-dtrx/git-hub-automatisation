@@ -11,4 +11,4 @@ jobs:
   mirror-private-to-public:
     permissions:
       contents: write
-    uses: kvn-dtrx/git-hub-automatisation/.github/workflows/mirror_private_to_public.yaml@main
+    uses: kvn-dtrx/git-hub-automatisation/.github/workflows/mirror-private-to-public.yaml@main

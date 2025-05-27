@@ -24,7 +24,7 @@ jobs:
         with:
           args: --verbose "**/*.md" "**/*.tex" "**/*.txt"
           fail: false
-          # NOTE Secret must be added to the repository. Can be done on CLI via:
+          # NOTE: Secret must be added to the repository. Can be done on CLI via:
           # gh secret set GH_LYCHEE_TOKEN --body "cryptic-token" --repo "repo-name"
           token: ${{ secrets.GH_LYCHEE_TOKEN }}
 
