@@ -7,7 +7,7 @@
 # ---
 
 # NOTE: As git does not track renames, older directory and file
-# names must also be listed in the `.pubignore` file in order
+# names must also be listed in the `.pubignore` file in order to
 # fully remove them from the repository history.
 
 set -e

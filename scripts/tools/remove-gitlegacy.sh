@@ -12,7 +12,7 @@
 # ---
 
 # [ "$#" -eq 0 ] &&
-#     1="/Users/kade/Downloads/plain-text"
+#     1="~/Downloads/plain-text"
 
 for arg in "${@}"; do
     (
